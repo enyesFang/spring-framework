@@ -37,7 +37,7 @@ import org.springframework.web.servlet.RequestToViewNameTranslator;
  * the presence of annotations like {@code @ModelAttribute} or {@code @ResponseBody}.
  * Therefore this handler should be configured after the handlers that support these
  * annotations.
- *
+ * 主要用来处理Controller返回字符串类型返回值。
  * @author Rossen Stoyanchev
  * @author Juergen Hoeller
  * @since 3.1
