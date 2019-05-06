@@ -44,7 +44,7 @@ public interface HandlerMethodReturnValueHandler {
 	 * setting a view or setting the
 	 * {@link ModelAndViewContainer#setRequestHandled} flag to {@code true}
 	 * to indicate the response has been handled directly.
-	 * @param returnValue the value returned from the handler method
+	 * @param returnValue the value returned from the handler method. Controller方法中的返回值。
 	 * @param returnType the type of the return value. This type must have
 	 * previously been passed to {@link #supportsReturnType} which must
 	 * have returned {@code true}.

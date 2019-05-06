@@ -25,6 +25,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 /**
  * Strategy interface for resolving method parameters into argument values in
  * the context of a given request.
+ * 处理controller方法的参数绑定问题。
  *
  * @author Arjen Poutsma
  * @since 3.1

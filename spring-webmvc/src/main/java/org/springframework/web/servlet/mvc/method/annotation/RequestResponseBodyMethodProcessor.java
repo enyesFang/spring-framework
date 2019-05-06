@@ -53,7 +53,7 @@ import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolv
  * with {@code @javax.validation.Valid}. In case of validation failure,
  * {@link MethodArgumentNotValidException} is raised and results in an HTTP 400
  * response status code if {@link DefaultHandlerExceptionResolver} is configured.
- *
+ * 处理请求@RequestBody和响应@ResponseBody的处理器。
  * @author Arjen Poutsma
  * @author Rossen Stoyanchev
  * @author Juergen Hoeller
@@ -110,6 +110,11 @@ public class RequestResponseBodyMethodProcessor extends AbstractMessageConverter
 		return parameter.hasParameterAnnotation(RequestBody.class);
 	}
 
+	/**
+	 * 有@ResponseBody就支持。
+	 * @param returnType the method return type to check
+	 * @return
+	 */
 	@Override
 	public boolean supportsReturnType(MethodParameter returnType) {
 		return (AnnotatedElementUtils.hasAnnotation(returnType.getContainingClass(), ResponseBody.class) ||
@@ -167,11 +172,15 @@ public class RequestResponseBodyMethodProcessor extends AbstractMessageConverter
 		return (requestBody != null && requestBody.required() && !parameter.isOptional());
 	}
 
+	/**
+	 * 将请求转发给HttpMessageConverter处理。
+	 */
 	@Override
 	public void handleReturnValue(@Nullable Object returnValue, MethodParameter returnType,
 			ModelAndViewContainer mavContainer, NativeWebRequest webRequest)
 			throws IOException, HttpMediaTypeNotAcceptableException, HttpMessageNotWritableException {
 
+		// 标志此次请求是否是由handler自己控制的，true表示本方法会响应请求。
 		mavContainer.setRequestHandled(true);
 		ServletServerHttpRequest inputMessage = createInputMessage(webRequest);
 		ServletServerHttpResponse outputMessage = createOutputMessage(webRequest);
