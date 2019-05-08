@@ -29,7 +29,11 @@ import org.springframework.lang.Nullable;
  * <p>Error views are analogous to JSP error pages but can be used with any kind of
  * exception including any checked exception, with potentially fine-grained mappings for
  * specific handlers.
- *
+ * 该接口只能处理请求过程中抛出的异常，异常处理本身所抛出的异常和视图解析过程中抛出的异常它是不能处理的。
+ * <mvc:annotation-driven/>会自动将ExceptionHandlerExceptionResolver, ResponseStatusExceptionResolver, 
+ * DefaultHandlerExceptionResolver配置到Spring MVC中.
+ * 使用模板设计模式，接口定义处理异常的标准API，而Abstract子类定义了处理异常的步骤。
+ * @see org.springframework.web.servlet.config.AnnotationDrivenBeanDefinitionParser 默认HandlerExceptionResolver的添加逻辑。
  * @author Juergen Hoeller
  * @since 22.11.2003
  */
@@ -41,6 +45,7 @@ public interface HandlerExceptionResolver {
 	 * <p>The returned {@code ModelAndView} may be {@linkplain ModelAndView#isEmpty() empty}
 	 * to indicate that the exception has been resolved successfully but that no view
 	 * should be rendered, for instance by setting a status code.
+	 * @see DispatcherServlet#processHandlerException(HttpServletRequest, HttpServletResponse, Object, Exception)
 	 * @param request current HTTP request
 	 * @param response current HTTP response
 	 * @param handler the executed handler, or {@code null} if none chosen at the

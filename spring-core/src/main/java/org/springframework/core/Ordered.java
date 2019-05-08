@@ -43,6 +43,7 @@ package org.springframework.core;
 public interface Ordered {
 
 	/**
+	 * 值越小优先级越高。
 	 * Useful constant for the highest precedence value.
 	 * @see java.lang.Integer#MIN_VALUE
 	 */

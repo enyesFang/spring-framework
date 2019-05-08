@@ -1219,6 +1219,7 @@ public abstract class StringUtils {
 	/**
 	 * Convert a comma delimited list (e.g., a row from a CSV file) into an
 	 * array of strings.
+	 * 将逗号分隔的字符串转换为数字。
 	 * @param str the input {@code String} (potentially {@code null} or empty)
 	 * @return an array of strings, or the empty array in case of empty input
 	 */

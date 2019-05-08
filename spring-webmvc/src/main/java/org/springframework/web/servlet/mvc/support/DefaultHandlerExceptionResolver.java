@@ -132,7 +132,7 @@ import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
  * </tr>
  * </tbody>
  * </table>
- *
+ * 按照Spring内部不同的Exception类型分别对异常进行处理。
  * @author Arjen Poutsma
  * @author Rossen Stoyanchev
  * @author Juergen Hoeller
