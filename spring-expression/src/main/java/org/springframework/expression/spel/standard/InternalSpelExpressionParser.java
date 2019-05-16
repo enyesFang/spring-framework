@@ -393,6 +393,11 @@ class InternalSpelExpressionParser extends TemplateAwareExpressionParser {
 	//    | lastSelection
 	//    ))
 	//	;
+
+	/**
+	 * 处理点号(.)节点。
+	 * @return
+	 */
 	private SpelNodeImpl eatDottedNode() {
 		Token t = takeToken();  // it was a '.' or a '?.'
 		boolean nullSafeNavigation = (t.kind == TokenKind.SAFE_NAVI);
