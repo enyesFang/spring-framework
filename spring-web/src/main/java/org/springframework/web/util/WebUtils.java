@@ -494,6 +494,7 @@ public abstract class WebUtils {
 	 * <p>Checks the presence of the "javax.servlet.include.request_uri"
 	 * request attribute. Could check any request attribute that is only
 	 * present in an include request.
+	 * <jsp:incluede page="xxx.jsp"/>
 	 * @param request current servlet request
 	 * @return whether the given request is an include request
 	 */

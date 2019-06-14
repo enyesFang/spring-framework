@@ -849,7 +849,7 @@ public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter
 	/**
 	 * Invoke the {@link RequestMapping} handler method preparing a {@link ModelAndView}
 	 * if view resolution is required.
-	 * 通过@RequestMapping注解找到对应的Controller并执行，然后返回ModelAndView对象。
+	 * 通过@RequestMapping注解找到对应的Controller方法并执行，然后返回ModelAndView对象。
 	 * @since 4.2
 	 * @see #createInvocableHandlerMethod(HandlerMethod)
 	 */

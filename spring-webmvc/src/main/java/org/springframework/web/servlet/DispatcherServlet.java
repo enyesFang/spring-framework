@@ -959,6 +959,10 @@ public class DispatcherServlet extends FrameworkServlet {
 		}
 	}
 
+	/**
+	 * 请求参数与header debug日志打印。
+	 * @param request request
+	 */
 	private void logRequest(HttpServletRequest request) {
 		LogFormatUtils.traceDebug(logger, traceOn -> {
 			String params;
