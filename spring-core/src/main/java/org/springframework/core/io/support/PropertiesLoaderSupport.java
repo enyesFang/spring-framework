@@ -48,6 +48,9 @@ public abstract class PropertiesLoaderSupport {
 
 	protected boolean localOverride = false;
 
+	/**
+	 * properties文件存放位置。
+	 */
 	@Nullable
 	private Resource[] locations;
 

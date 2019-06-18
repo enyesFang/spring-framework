@@ -47,7 +47,7 @@ import org.springframework.util.StringValueResolver;
  * source search order through the container's {@code Environment}; however, exact preservation
  * of functionality may be maintained by continuing to use {@code PropertyPlaceholderConfigurer}.
  * </ul>
- *
+ * properties文件占位符处理。
  * @author Juergen Hoeller
  * @author Chris Beams
  * @since 02.10.2003
