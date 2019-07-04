@@ -18,6 +18,7 @@ package org.springframework.web.servlet;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.lang.Nullable;
 
 /**
@@ -48,6 +49,7 @@ import org.springframework.lang.Nullable;
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
+ * @see DispatcherServlet#initHandlerMappings(ApplicationContext) 初始化mvc容器中的
  * @see org.springframework.core.Ordered
  * @see org.springframework.web.servlet.handler.AbstractHandlerMapping
  * @see org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping

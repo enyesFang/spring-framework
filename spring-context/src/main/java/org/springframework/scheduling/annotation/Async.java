@@ -26,6 +26,7 @@ import java.lang.annotation.Target;
  * Annotation that marks a method as a candidate for <i>asynchronous</i> execution.
  * Can also be used at the type level, in which case all of the type's methods are
  * considered as asynchronous.
+ * 该注解可以标记一个异步执行的方法，也可以用来标注类，表示类中的所有方法都是异步执行的。
  *
  * <p>In terms of target method signatures, any parameter types are supported.
  * However, the return type is constrained to either {@code void} or
@@ -34,6 +35,7 @@ import java.lang.annotation.Target;
  * {@link java.util.concurrent.CompletableFuture} types which allow for richer
  * interaction with the asynchronous task and for immediate composition with
  * further processing steps.
+ * 入参随意，但返回值只能是void或者Future.(ListenableFuture接口/CompletableFuture类)
  *
  * <p>A {@code Future} handle returned from the proxy will be an actual asynchronous
  * {@code Future} that can be used to track the result of the asynchronous method
@@ -41,7 +43,7 @@ import java.lang.annotation.Target;
  * it will have to return a temporary {@code Future} handle that just passes a value
  * through: e.g. Spring's {@link AsyncResult}, EJB 3.1's {@link javax.ejb.AsyncResult},
  * or {@link java.util.concurrent.CompletableFuture#completedFuture(Object)}.
- *
+ * Future是代理返回的切实的异步返回，用以追踪异步方法的返回值。当然也可以使用AsyncResult类（实现ListenableFuture接口）(Spring或者EJB都有)或者CompletableFuture类.
  * @author Juergen Hoeller
  * @author Chris Beams
  * @since 3.0
