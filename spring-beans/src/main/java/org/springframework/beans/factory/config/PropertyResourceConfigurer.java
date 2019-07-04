@@ -70,6 +70,7 @@ public abstract class PropertyResourceConfigurer extends PropertiesLoaderSupport
 
 
 	/**
+	 *  BeanFactoryPostProcessor
 	 * {@linkplain #mergeProperties Merge}, {@linkplain #convertProperties convert} and
 	 * {@linkplain #processProperties process} properties against the given bean factory.
 	 * @throws BeanInitializationException if any properties cannot be loaded

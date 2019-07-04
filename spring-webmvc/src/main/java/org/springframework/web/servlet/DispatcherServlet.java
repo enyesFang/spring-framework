@@ -298,7 +298,11 @@ public class DispatcherServlet extends FrameworkServlet {
 	/** Detect all HandlerAdapters or just expect "handlerAdapter" bean?. */
 	private boolean detectAllHandlerAdapters = true;
 
-	/** Detect all HandlerExceptionResolvers or just expect "handlerExceptionResolver" bean?. */
+	/**
+	 * Detect all HandlerExceptionResolvers or just expect "handlerExceptionResolver" bean?.
+	 * 查询Spring容器中所有的HandlerExceptionResolver还是只查找名称为handlerExceptionResolver的bean？
+	 * @see #initHandlerExceptionResolvers(ApplicationContext)
+	 */
 	private boolean detectAllHandlerExceptionResolvers = true;
 
 	/** Detect all ViewResolvers or just expect "viewResolver" bean?. */
@@ -330,7 +334,11 @@ public class DispatcherServlet extends FrameworkServlet {
 	@Nullable
 	private List<HandlerAdapter> handlerAdapters;
 
-	/** List of HandlerExceptionResolvers used by this servlet. */
+	/**
+	 * List of HandlerExceptionResolvers used by this servlet.
+	 * 系统内的异常处理器。
+	 * @see #initHandlerExceptionResolvers(ApplicationContext) 初始化方法
+	 */
 	@Nullable
 	private List<HandlerExceptionResolver> handlerExceptionResolvers;
 
@@ -951,6 +959,10 @@ public class DispatcherServlet extends FrameworkServlet {
 		}
 	}
 
+	/**
+	 * 请求参数与header debug日志打印。
+	 * @param request request
+	 */
 	private void logRequest(HttpServletRequest request) {
 		LogFormatUtils.traceDebug(logger, traceOn -> {
 			String params;
@@ -1052,6 +1064,7 @@ public class DispatcherServlet extends FrameworkServlet {
 				// making them available for @ExceptionHandler methods and other scenarios.
 				dispatchException = new NestedServletException("Handler dispatch failed", err);
 			}
+			// 处理Controller处理的结果，正确结果or异常。
 			processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
 		}
 		catch (Exception ex) {

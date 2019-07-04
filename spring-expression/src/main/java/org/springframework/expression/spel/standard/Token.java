@@ -21,7 +21,7 @@ import org.springframework.lang.Nullable;
 /**
  * Holder for a kind of token, the associated data and its position in the input data
  * stream (start/end).
- *
+ * 分隔符，由分隔符类型，分隔符值，和在spel字符串中的开始和结束位置。
  * @author Andy Clement
  * @since 3.0
  */

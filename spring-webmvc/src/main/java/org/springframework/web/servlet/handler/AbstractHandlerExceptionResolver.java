@@ -133,9 +133,11 @@ public abstract class AbstractHandlerExceptionResolver implements HandlerExcepti
 	@Nullable
 	public ModelAndView resolveException(
 			HttpServletRequest request, HttpServletResponse response, @Nullable Object handler, Exception ex) {
-
+		// 当前是否处理当前异常
 		if (shouldApplyTo(request, handler)) {
+			// 异常的预处理，一般是不需要缓存时增加response Cache-Control header
 			prepareResponse(ex, response);
+			// 模板方法，具体由子类实现
 			ModelAndView result = doResolveException(request, response, handler, ex);
 			if (result != null) {
 				// Print warn message when warn logger is not enabled...
@@ -143,6 +145,7 @@ public abstract class AbstractHandlerExceptionResolver implements HandlerExcepti
 					logger.debug("Resolved [" + ex + "]" + (result.isEmpty() ? "" : " to " + result));
 				}
 				// warnLogger with full stack trace (requires explicit config)
+				// 打印异常
 				logException(ex, request);
 			}
 			return result;

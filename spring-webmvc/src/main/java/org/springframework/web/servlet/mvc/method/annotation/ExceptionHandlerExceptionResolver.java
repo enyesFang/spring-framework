@@ -68,7 +68,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
  * {@link #setCustomArgumentResolvers} and {@link #setCustomReturnValueHandlers}.
  * Or alternatively to re-configure all argument and return value types use
  * {@link #setArgumentResolvers} and {@link #setReturnValueHandlers(List)}.
- *
+ * 使用@ExceptionHandler注释的方法进行对异常的解析。
  * @author Rossen Stoyanchev
  * @author Juergen Hoeller
  * @since 3.1

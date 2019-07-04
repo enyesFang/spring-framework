@@ -24,7 +24,7 @@ import org.springframework.util.ObjectUtils;
  * Encapsulates an object and a {@link TypeDescriptor} that describes it.
  * The type descriptor can contain generic declarations that would not
  * be accessible through a simple {@code getClass()} call on the object.
- *
+ * Value值和Value类型描述。
  * @author Andy Clement
  * @author Juergen Hoeller
  * @since 3.0

@@ -45,7 +45,7 @@ import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
  * attribute overrides for {@code @ResponseStatus} in custom composed annotations.
  *
  * <p>As of 5.0 this resolver also supports {@link ResponseStatusException}.
- *
+ * 解析有@ResponseStatus注解的异常.
  * @author Arjen Poutsma
  * @author Rossen Stoyanchev
  * @author Sam Brannen
@@ -75,6 +75,7 @@ public class ResponseStatusExceptionResolver extends AbstractHandlerExceptionRes
 				return resolveResponseStatusException((ResponseStatusException) ex, request, response, handler);
 			}
 
+			// 如果异常类有@ResponseStatus注解，则根据注解配置返回给调用方。
 			ResponseStatus status = AnnotatedElementUtils.findMergedAnnotation(ex.getClass(), ResponseStatus.class);
 			if (status != null) {
 				return resolveResponseStatus(status, request, response, handler, ex);

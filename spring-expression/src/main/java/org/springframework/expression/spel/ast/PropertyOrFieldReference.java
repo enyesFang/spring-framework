@@ -42,7 +42,7 @@ import org.springframework.util.ReflectionUtils;
 
 /**
  * Represents a simple property or field reference.
- *
+ * 读取某个对象的属性或者方法。
  * @author Andy Clement
  * @author Juergen Hoeller
  * @author Clark Duplichien

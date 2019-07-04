@@ -19,7 +19,8 @@ package org.springframework.expression;
 /**
  * Input provided to an expression parser that can influence an expression
  * parsing/compilation routine.
- *
+ * 解析器上下文：解析spel字符串时使用该上下文标识是否是模板。默认不是模板。模板是#{}。
+ * @see org.springframework.expression.common.TemplateParserContext 模板实现类
  * @author Keith Donald
  * @author Andy Clement
  * @since 3.0

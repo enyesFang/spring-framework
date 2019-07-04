@@ -25,7 +25,8 @@ import org.springframework.web.context.request.NativeWebRequest;
 /**
  * Strategy interface for resolving method parameters into argument values in
  * the context of a given request.
- * 处理controller方法的参数绑定问题。
+ * 方法参数解析器。处理controller方法的参数绑定问题。
+ * springmvc的默认参数解析器初始化参见：RequestMappingHandlerAdapter#afterPropertiesSet()
  *
  * @author Arjen Poutsma
  * @since 3.1
@@ -36,6 +37,7 @@ public interface HandlerMethodArgumentResolver {
 	/**
 	 * Whether the given {@linkplain MethodParameter method parameter} is
 	 * supported by this resolver.
+	 * 该解析器是否支持parameter的参数解析?
 	 * @param parameter the method parameter to check
 	 * @return {@code true} if this resolver supports the supplied parameter;
 	 * {@code false} otherwise
@@ -48,6 +50,7 @@ public interface HandlerMethodArgumentResolver {
 	 * request. A {@link WebDataBinderFactory} provides a way to create
 	 * a {@link WebDataBinder} instance when needed for data binding and
 	 * type conversion purposes.
+	 * 将方法参数从给定的webRequest请求解析为参数值并返回。
 	 * @param parameter the method parameter to resolve. This parameter must
 	 * have previously been passed to {@link #supportsParameter} which must
 	 * have returned {@code true}.

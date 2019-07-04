@@ -8,7 +8,6 @@ dependencyManagement {
 }
 
 dependencies {
-	provided("javax.servlet:javax.servlet-api:4.0.1")
 	compile(project(":spring-aop"))
 	compile(project(":spring-beans"))
 	compile(project(":spring-context"))
@@ -17,6 +16,7 @@ dependencies {
 	compile(project(":spring-web"))
 	optional(project(":spring-context-support"))  // for FreeMarker support
 	optional(project(":spring-oxm"))
+	optional("javax.servlet:javax.servlet-api:4.0.1")
 	optional("javax.servlet.jsp:javax.servlet.jsp-api:2.3.2-b02")
 	optional("javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api:1.2.1")
 	optional("javax.el:javax.el-api:3.0.1-b04")

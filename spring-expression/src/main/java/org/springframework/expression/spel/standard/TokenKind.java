@@ -18,7 +18,7 @@ package org.springframework.expression.spel.standard;
 
 /**
  * Token Kinds.
- *
+ * 分隔符类型。
  * @author Andy Clement
  * @since 3.0
  */

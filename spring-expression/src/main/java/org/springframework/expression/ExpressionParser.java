@@ -19,7 +19,8 @@ package org.springframework.expression;
 /**
  * Parses expression strings into compiled expressions that can be evaluated.
  * Supports parsing templates as well as standard expression strings.
- *
+ * 表达式解析器：将字符串的表达式形式解析为Expression对象。
+ * @see org.springframework.expression.spel.standard.SpelExpressionParser 默认实现
  * @author Keith Donald
  * @author Andy Clement
  * @since 3.0

@@ -52,7 +52,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * (e.g. lazy-init bean, prototype bean). Use {@link #createWithResolvedBean()}
  * to obtain a {@code HandlerMethod} instance with a bean instance resolved
  * through the associated {@link BeanFactory}.
- *
+ * 处理@RequestMapping的方法对象。
  * @author Arjen Poutsma
  * @author Rossen Stoyanchev
  * @author Juergen Hoeller
@@ -64,6 +64,9 @@ public class HandlerMethod {
 	/** Logger that is available to subclasses. */
 	protected final Log logger = LogFactory.getLog(getClass());
 
+	/**
+	 * 方法所属的Controller bean?
+	 */
 	private final Object bean;
 
 	@Nullable

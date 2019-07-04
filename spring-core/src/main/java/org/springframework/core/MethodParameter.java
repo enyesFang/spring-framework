@@ -48,7 +48,7 @@ import org.springframework.util.ClassUtils;
  * <p>As of 4.2, there is a {@link org.springframework.core.annotation.SynthesizingMethodParameter}
  * subclass available which synthesizes annotations with attribute aliases. That subclass is used
  * for web and message endpoint processing, in particular.
- *
+ * 方法参数，针对Parameter的包装类。
  * @author Juergen Hoeller
  * @author Rob Harrop
  * @author Andy Clement
