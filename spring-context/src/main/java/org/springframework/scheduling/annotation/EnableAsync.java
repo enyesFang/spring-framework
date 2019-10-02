@@ -31,7 +31,7 @@ import org.springframework.core.Ordered;
 /**
  * Enables Spring's asynchronous method execution capability, similar to functionality
  * found in Spring's {@code <task:*>} XML namespace.
- *
+ * 开启spring异步执行器，类似xml中的task标签配置，需要联合@Configuration注解一起使用.
  * <p>To be used together with @{@link Configuration Configuration} classes as follows,
  * enabling annotation-driven async processing for an entire Spring application context:
  *
@@ -58,6 +58,7 @@ import org.springframework.core.Ordered;
  *     }
  * }</pre>
  *
+ * 默认情况下spring会先搜索TaskExecutor类型的bean或者名字为taskExecutor的Executor类型的bean,都不存在使用SimpleAsyncTaskExecutor执行器.
  * <p>By default, Spring will be searching for an associated thread pool definition:
  * either a unique {@link org.springframework.core.task.TaskExecutor} bean in the context,
  * or an {@link java.util.concurrent.Executor} bean named "taskExecutor" otherwise. If
@@ -66,6 +67,7 @@ import org.springframework.core.Ordered;
  * {@code void} return type cannot transmit any exception back to the caller. By default,
  * such uncaught exceptions are only logged.
  *
+ * 可实现AsyncConfigurer接口复写getAsyncExecutor获取异步执行器，getAsyncUncaughtExceptionHandler获取异步未捕获异常处理器.
  * <p>To customize all this, implement {@link AsyncConfigurer} and provide:
  * <ul>
  * <li>your own {@link java.util.concurrent.Executor Executor} through the
@@ -163,6 +165,7 @@ import org.springframework.core.Ordered;
 public @interface EnableAsync {
 
 	/**
+	 * 该属性用来支持用户自定义异步注解，默认扫描spring的@Async和EJB3.1的@code @javax.ejb.Asynchronous.
 	 * Indicate the 'async' annotation type to be detected at either class
 	 * or method level.
 	 * <p>By default, both Spring's @{@link Async} annotation and the EJB 3.1
@@ -174,6 +177,7 @@ public @interface EnableAsync {
 	Class<? extends Annotation> annotation() default Annotation.class;
 
 	/**
+	 * 标明是否需要创建CGLIB子类代理，AdviceMode=PROXY时才适用。注意设置为true时，其它spring管理的bean也会升级到CGLIB子类代理.
 	 * Indicate whether subclass-based (CGLIB) proxies are to be created as opposed
 	 * to standard Java interface-based proxies.
 	 * <p><strong>Applicable only if the {@link #mode} is set to {@link AdviceMode#PROXY}</strong>.
@@ -188,6 +192,7 @@ public @interface EnableAsync {
 	boolean proxyTargetClass() default false;
 
 	/**
+	 * 标明异步通知将会如何实现，默认PROXY，如需支持同一个类中非异步方法调用另一个异步方法，需要设置为ASPECTJ.
 	 * Indicate how async advice should be applied.
 	 * <p><b>The default is {@link AdviceMode#PROXY}.</b>
 	 * Please note that proxy mode allows for interception of calls through the proxy
@@ -200,6 +205,7 @@ public @interface EnableAsync {
 	AdviceMode mode() default AdviceMode.PROXY;
 
 	/**
+	 * 标明异步注解bean处理器应该遵循的执行顺序，默认最低的优先级（Integer.MAX_VALUE，值越小优先级越高）.
 	 * Indicate the order in which the {@link AsyncAnnotationBeanPostProcessor}
 	 * should be applied.
 	 * <p>The default is {@link Ordered#LOWEST_PRECEDENCE} in order to run

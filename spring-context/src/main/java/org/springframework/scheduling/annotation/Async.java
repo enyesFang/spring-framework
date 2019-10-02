@@ -44,10 +44,13 @@ import java.lang.annotation.Target;
  * through: e.g. Spring's {@link AsyncResult}, EJB 3.1's {@link javax.ejb.AsyncResult},
  * or {@link java.util.concurrent.CompletableFuture#completedFuture(Object)}.
  * Future是代理返回的切实的异步返回，用以追踪异步方法的返回值。当然也可以使用AsyncResult类（实现ListenableFuture接口）(Spring或者EJB都有)或者CompletableFuture类.
+ * @Async  必须不同类间调用： A类--》B类.C方法()（@Async注释在B类/方法中），如果在同一个类中调用，会变同步执行,
+ * 例如:A类.B()-->A类.@Async C()，原因是：底层实现是代理对注解扫描实现的，B方法上没有注解，没有生成相应的代理类。
+ * (当然把@Async加到类上也能解决但所有方法都异步了，一般不这么用！)
+ * @see AnnotationAsyncExecutionInterceptor
  * @author Juergen Hoeller
  * @author Chris Beams
  * @since 3.0
- * @see AnnotationAsyncExecutionInterceptor
  * @see AsyncAnnotationAdvisor
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
@@ -61,10 +64,12 @@ public @interface Async {
 	 * method, matching the qualifier value (or the bean name) of a specific
 	 * {@link java.util.concurrent.Executor Executor} or
 	 * {@link org.springframework.core.task.TaskExecutor TaskExecutor}
+	 * 用以限定执行方法的执行器名称（自定义）：Executor或者TaskExecutor
 	 * bean definition.
 	 * <p>When specified on a class level {@code @Async} annotation, indicates that the
 	 * given executor should be used for all methods within the class. Method level use
 	 * of {@code Async#value} always overrides any value set at the class level.
+	 * 加在类上表示整个类都使用，加在方法上会覆盖类上的设置。
 	 * @since 3.1.2
 	 */
 	String value() default "";

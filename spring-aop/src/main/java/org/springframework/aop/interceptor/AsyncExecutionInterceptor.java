@@ -57,7 +57,7 @@ import org.springframework.util.ClassUtils;
  * <p>As of Spring 3.1.2 the {@code AnnotationAsyncExecutionInterceptor} subclass is
  * preferred for use due to its support for executor qualification in conjunction with
  * Spring's {@code @Async} annotation.
- *
+ * @Async 注解对应的拦截器。
  * @author Juergen Hoeller
  * @author Chris Beams
  * @author Stephane Nicoll

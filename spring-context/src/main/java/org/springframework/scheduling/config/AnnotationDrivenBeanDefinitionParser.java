@@ -32,7 +32,7 @@ import org.springframework.util.StringUtils;
 
 /**
  * Parser for the 'annotation-driven' element of the 'task' namespace.
- *
+ * task:annotation-driven的注解解析。
  * @author Mark Fisher
  * @author Juergen Hoeller
  * @author Ramnivas Laddad
