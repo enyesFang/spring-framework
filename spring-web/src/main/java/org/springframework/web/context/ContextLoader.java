@@ -274,9 +274,11 @@ public class ContextLoader {
 		try {
 			// Store context in local instance variable, to guarantee that
 			// it is available on ServletContext shutdown.
+			// 1. 初始化WebApplicationContext实例，可以web.xml中配置contextClass来集成自定义WebApplicationContext，或者使用默认XmlWebApplicationContext。
 			if (this.context == null) {
 				this.context = createWebApplicationContext(servletContext);
 			}
+			// 2. 如果是ConfigurableWebApplicationContext并且未启动，则1）如果父容器未设置，则先设置父容器，用于自定义拓展，默认null；2）配置并启动webApplicationContext。
 			if (this.context instanceof ConfigurableWebApplicationContext) {
 				ConfigurableWebApplicationContext cwac = (ConfigurableWebApplicationContext) this.context;
 				if (!cwac.isActive()) {
@@ -288,6 +290,7 @@ public class ContextLoader {
 						ApplicationContext parent = loadParentContext(servletContext);
 						cwac.setParent(parent);
 					}
+					// ApplicationContext初始化重点看该方法实现。
 					configureAndRefreshWebApplicationContext(cwac, servletContext);
 				}
 			}
@@ -368,6 +371,7 @@ public class ContextLoader {
 	}
 
 	protected void configureAndRefreshWebApplicationContext(ConfigurableWebApplicationContext wac, ServletContext sc) {
+		// 1. 使用自定义ID或者contextPath来替换默认id。
 		if (ObjectUtils.identityToString(wac).equals(wac.getId())) {
 			// The application context id is still set to its original default value
 			// -> assign a more useful id based on available information
@@ -376,12 +380,13 @@ public class ContextLoader {
 				wac.setId(idParam);
 			}
 			else {
-				// Generate default id...
+				// Generate default id... eg:org.springframework.web.context.WebApplicationContext:/fc-spring-web
 				wac.setId(ConfigurableWebApplicationContext.APPLICATION_CONTEXT_ID_PREFIX +
 						ObjectUtils.getDisplayString(sc.getContextPath()));
 			}
 		}
 
+		// 2. 设置ServletContext和spring xml配置文件路径。
 		wac.setServletContext(sc);
 		String configLocationParam = sc.getInitParameter(CONFIG_LOCATION_PARAM);
 		if (configLocationParam != null) {
@@ -391,12 +396,15 @@ public class ContextLoader {
 		// The wac environment's #initPropertySources will be called in any case when the context
 		// is refreshed; do it eagerly here to ensure servlet property sources are in place for
 		// use in any post-processing or initialization that occurs below prior to #refresh
+		// 3. 初始化Environment properties，保证Servlet property已经
 		ConfigurableEnvironment env = wac.getEnvironment();
 		if (env instanceof ConfigurableWebEnvironment) {
 			((ConfigurableWebEnvironment) env).initPropertySources(sc, null);
 		}
 
+		// 4. 初始化用户自定义的一些属性。
 		customizeContext(sc, wac);
+		// 5. 调用refresh来初始化容器。
 		wac.refresh();
 	}
 
@@ -418,6 +426,7 @@ public class ContextLoader {
 	 * @see ApplicationContextInitializer#initialize(ConfigurableApplicationContext)
 	 */
 	protected void customizeContext(ServletContext sc, ConfigurableWebApplicationContext wac) {
+		// 加载并初始化在web.xml中配置的key为globalInitializerClasses、contextInitializerClasses的(spring-context)ApplicationContextInitializer
 		List<Class<ApplicationContextInitializer<ConfigurableApplicationContext>>> initializerClasses =
 				determineContextInitializerClasses(sc);
 
