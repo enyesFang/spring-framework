@@ -21,7 +21,7 @@ import org.springframework.lang.Nullable;
 /**
  * Interface defining a generic contract for attaching and accessing metadata
  * to/from arbitrary objects.
- *
+ * 定义了最基本的对对象的元数据的修改或者获取。
  * @author Rob Harrop
  * @since 2.0
  */

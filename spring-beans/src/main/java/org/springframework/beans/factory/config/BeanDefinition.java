@@ -29,7 +29,9 @@ import org.springframework.lang.Nullable;
  * <p>This is just a minimal interface: The main intention is to allow a
  * {@link BeanFactoryPostProcessor} such as {@link PropertyPlaceholderConfigurer}
  * to introspect and modify property values and other bean metadata.
- *
+ * BeanDefinition是一个接口，是一个抽象的定义，实际使用的是其实现类，如ChildBeanDefinition、RootBeanDefinition、GenericBeanDefinition等。
+ * BeanDefinition继承了AttributeAccessor，说明它具有处理属性的能力；
+ * BeanDefinition继承了BeanMetadataElement，说明它可以持有Bean元数据元素，作用是可以持有XML文件的一个bean标签对应的Object。
  * @author Juergen Hoeller
  * @author Rob Harrop
  * @since 19.03.2004

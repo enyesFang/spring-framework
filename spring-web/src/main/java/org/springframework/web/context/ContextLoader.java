@@ -390,6 +390,8 @@ public class ContextLoader {
 		wac.setServletContext(sc);
 		String configLocationParam = sc.getInitParameter(CONFIG_LOCATION_PARAM);
 		if (configLocationParam != null) {
+			// location可以是分号回车等分隔符在一起的xml路径，内部会解析。
+			// @see AbstractRefreshableConfigApplicationContext#setConfigLocation(String)
 			wac.setConfigLocation(configLocationParam);
 		}
 

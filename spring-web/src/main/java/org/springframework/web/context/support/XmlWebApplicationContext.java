@@ -90,6 +90,7 @@ public class XmlWebApplicationContext extends AbstractRefreshableWebApplicationC
 
 		// Allow a subclass to provide custom initialization of the reader,
 		// then proceed with actually loading the bean definitions.
+		// do nothing, 有子类拓展。
 		initBeanDefinitionReader(beanDefinitionReader);
 		// 由 XmlBeanDefinitionReader来读取配置的xml文件地址。
 		loadBeanDefinitions(beanDefinitionReader);
@@ -123,6 +124,7 @@ public class XmlWebApplicationContext extends AbstractRefreshableWebApplicationC
 		String[] configLocations = getConfigLocations();
 		if (configLocations != null) {
 			for (String configLocation : configLocations) {
+				// 由Reader读取xml配置文件。那注解方式在什么时候解析的呢？
 				reader.loadBeanDefinitions(configLocation);
 			}
 		}
