@@ -62,8 +62,10 @@ import org.springframework.util.ObjectUtils;
 public abstract class AbstractApplicationEventMulticaster
 		implements ApplicationEventMulticaster, BeanClassLoaderAware, BeanFactoryAware {
 
+	// default store all listeners
 	private final ListenerRetriever defaultRetriever = new ListenerRetriever(false);
 
+	// cache，when listeners change，cache will be cleared
 	final Map<ListenerCacheKey, ListenerRetriever> retrieverCache = new ConcurrentHashMap<>(64);
 
 	@Nullable
@@ -200,6 +202,7 @@ public abstract class AbstractApplicationEventMulticaster
 		}
 		else {
 			// No ListenerRetriever caching -> no synchronization necessary
+			// cache 逻辑我们忽略，直接查看该方法实现。
 			return retrieveApplicationListeners(eventType, sourceType, null);
 		}
 	}
@@ -222,6 +225,7 @@ public abstract class AbstractApplicationEventMulticaster
 			listenerBeans = new LinkedHashSet<>(this.defaultRetriever.applicationListenerBeans);
 		}
 		for (ApplicationListener<?> listener : listeners) {
+			// current listener 是否支持当前event类型？ 如何判断的？
 			if (supportsEvent(listener, eventType, sourceType)) {
 				if (retriever != null) {
 					retriever.applicationListeners.add(listener);
@@ -230,6 +234,7 @@ public abstract class AbstractApplicationEventMulticaster
 			}
 		}
 		if (!listenerBeans.isEmpty()) {
+			// 如果配置了bean id，则从BeanFactory中获取bean实例。
 			BeanFactory beanFactory = getBeanFactory();
 			for (String listenerBeanName : listenerBeans) {
 				try {
@@ -298,7 +303,7 @@ public abstract class AbstractApplicationEventMulticaster
 	 */
 	protected boolean supportsEvent(
 			ApplicationListener<?> listener, ResolvableType eventType, @Nullable Class<?> sourceType) {
-
+		// 类型判断交由GenericApplicationListener，该接口定义了supportsEventType和supportsSourceType方法。使用适配器模式。
 		GenericApplicationListener smartListener = (listener instanceof GenericApplicationListener ?
 				(GenericApplicationListener) listener : new GenericApplicationListenerAdapter(listener));
 		return (smartListener.supportsEventType(eventType) && smartListener.supportsSourceType(sourceType));

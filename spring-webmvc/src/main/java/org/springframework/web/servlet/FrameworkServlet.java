@@ -1019,6 +1019,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 				requestAttributes.requestCompleted();
 			}
 			logResult(request, response, failureCause, asyncManager);
+			// 处理完成，发送ServletRequestHandledEvent事件。
 			publishRequestHandledEvent(request, response, startTime, failureCause);
 		}
 	}

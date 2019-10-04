@@ -48,9 +48,15 @@ import org.springframework.util.ErrorHandler;
  */
 public class SimpleApplicationEventMulticaster extends AbstractApplicationEventMulticaster {
 
+	/**
+	 * 异步发送Event的线程池，如果为null，则同步发送。
+	 */
 	@Nullable
 	private Executor taskExecutor;
 
+	/**
+	 * 异常处理器，如果为null，则不捕获异常，允许异常扩散。
+	 */
 	@Nullable
 	private ErrorHandler errorHandler;
 
@@ -124,12 +130,14 @@ public class SimpleApplicationEventMulticaster extends AbstractApplicationEventM
 
 	@Override
 	public void multicastEvent(ApplicationEvent event) {
+		// event是对象，转换成ResolvableType很容易。
 		multicastEvent(event, resolveDefaultEventType(event));
 	}
 
 	@Override
 	public void multicastEvent(final ApplicationEvent event, @Nullable ResolvableType eventType) {
 		ResolvableType type = (eventType != null ? eventType : resolveDefaultEventType(event));
+		// 找到该event和匹配类型的所有listener，如果有线程池，则异步通知，否则同步。
 		for (final ApplicationListener<?> listener : getApplicationListeners(event, type)) {
 			Executor executor = getTaskExecutor();
 			if (executor != null) {
@@ -154,6 +162,7 @@ public class SimpleApplicationEventMulticaster extends AbstractApplicationEventM
 	protected void invokeListener(ApplicationListener<?> listener, ApplicationEvent event) {
 		ErrorHandler errorHandler = getErrorHandler();
 		if (errorHandler != null) {
+			// 有异常处理器，则捕获Throwable异常交由异常处理器处理。
 			try {
 				doInvokeListener(listener, event);
 			}
@@ -169,6 +178,7 @@ public class SimpleApplicationEventMulticaster extends AbstractApplicationEventM
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private void doInvokeListener(ApplicationListener listener, ApplicationEvent event) {
 		try {
+			// 前面获取的listener都是类型匹配的，应该不会发生ClassCastExeption吧？
 			listener.onApplicationEvent(event);
 		}
 		catch (ClassCastException ex) {
