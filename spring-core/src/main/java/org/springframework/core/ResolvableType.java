@@ -430,6 +430,8 @@ public class ResolvableType implements Serializable {
 	 * {@link #getSuperType() supertype} and {@link #getInterfaces() interface}
 	 * hierarchies to find a match, returning {@link #NONE} if this type does not
 	 * implement or extend the specified class.
+	 * 将原type通过搜索父类和父接口的方式查找与参数相匹配的type。
+	 * 通过该方法可以getGeneric()查询到泛型的具体类型。
 	 * @param type the required type (typically narrowed)
 	 * @return a {@link ResolvableType} representing this object as the specified
 	 * type, or {@link #NONE} if not resolvable as that type
@@ -447,11 +449,13 @@ public class ResolvableType implements Serializable {
 			return this;
 		}
 		for (ResolvableType interfaceType : getInterfaces()) {
+			// 只查询当前类的直接接口，父类继承的接口搜索由如下递归方式实现。
 			ResolvableType interfaceAsType = interfaceType.as(type);
 			if (interfaceAsType != NONE) {
 				return interfaceAsType;
 			}
 		}
+		// 通过父类递归搜索。
 		return getSuperType().as(type);
 	}
 
@@ -678,6 +682,7 @@ public class ResolvableType implements Serializable {
 	 * access a specific generic consider using the {@link #getGeneric(int...)} method as
 	 * it allows access to nested generics and protects against
 	 * {@code IndexOutOfBoundsExceptions}.
+	 * 获取泛型的类型。
 	 * @return an array of {@link ResolvableType ResolvableTypes} representing the generic parameters
 	 * (never {@code null})
 	 * @see #hasGenerics()
